@@ -104,15 +104,21 @@ $mensagem = $mensagens[$status] ?? '';
             <th>Posição</th>
             <th>Banco</th>
             <th>Votos</th>
+            <th>Percentual</th>
           </tr>
         </thead>
         <tbody>
           <?php $posicao = 1; ?>
           <?php foreach ($ranking as $banco => $votos): ?>
+            <?php
+              $quantidade = (int) $votos;
+              $percentual = $totalVotos > 0 ? ($quantidade / $totalVotos) * 100 : 0;
+            ?>
             <tr>
               <td><?= $posicao ?>&ordm;</td>
               <td><?= htmlspecialchars((string) $banco) ?></td>
-              <td><?= (int) $votos ?></td>
+              <td><?= $quantidade ?></td>
+              <td><?= number_format($percentual, 1, ',', '.') ?>%</td>
             </tr>
             <?php $posicao++; ?>
           <?php endforeach; ?>
