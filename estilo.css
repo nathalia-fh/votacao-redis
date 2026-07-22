@@ -26,7 +26,8 @@ body {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
-h1, h2 {
+h1,
+h2 {
   margin-top: 0;
 }
 
@@ -76,7 +77,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   border-bottom: 1px solid #dfe3e8;
   text-align: left;
@@ -95,15 +97,73 @@ th, td {
     padding: 18px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 8px;
     font-size: 0.9rem;
   }
 }
+
+.campo-texto {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #c9d0d8;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.tempo {
+  padding: 10px 12px;
+  border-left: 4px solid #1261a0;
+  background: #eef7ff;
+}
+
+.encerrada {
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff1f1;
+}
+
+.lider {
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff8d8;
+}
+
+.painel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.indicador {
+  padding: 14px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.indicador strong {
+  display: block;
+  font-size: 1.45rem;
+}
+
+.indicador span {
+  font-size: 0.85rem;
+  color: #555f6b;
+}
+
 .historico {
   padding-left: 22px;
 }
 
 .historico li {
   margin-bottom: 8px;
+}
+
+@media (max-width: 700px) {
+  .painel {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
