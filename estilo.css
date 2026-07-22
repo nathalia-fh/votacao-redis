@@ -100,3 +100,10 @@ th, td {
     font-size: 0.9rem;
   }
 }
+.historico {
+  padding-left: 22px;
+}
+
+.historico li {
+  margin-bottom: 8px;
+}

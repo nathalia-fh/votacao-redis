@@ -23,7 +23,6 @@ if (!$redis->exists('votacao:bancos')) {
     foreach ($opcoesPermitidas as $opcao) {
         $redis->zadd('votacao:bancos', [$opcao => 0]);
     }
-    // cria chave temporária ao inicializar
     $redis->setex('votacao:aberta', DURACAO_VOTACAO, '1');
 }
 
@@ -55,13 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // recusar voto se votação encerrada
     if (!$redis->exists('votacao:aberta')) {
         header('Location: index.php?status=encerrada');
         exit;
     }
 
-    // tenta adicionar participante; se já existia, retorna 0
     $novoParticipante = (int) $redis->sadd('votacao:participantes', $participante);
 
     if ($novoParticipante === 0) {
@@ -69,11 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // incrementa ranking e total
     $redis->zincrby('votacao:bancos', 1, $opcao);
     $redis->incr('votacao:total');
 
-    // registra histórico: formato "participante votou em opção"
     $registro = "{$participante} votou em {$opcao}";
     $redis->lpush('votacao:historico', $registro);
     $redis->ltrim('votacao:historico', 0, 9);
@@ -82,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// consultas para exibir na página
 $ranking = $redis->zrange('votacao:bancos', 0, -1, [
     'rev' => true,
     'withscores' => true,
@@ -168,7 +162,6 @@ $mensagem = $mensagens[$status] ?? '';
       <?php else: ?>
         <p class="encerrada">A votação está encerrada. Reinicie para abrir um novo prazo.</p>
       <?php endif; ?>
-
     </section>
 
     <section class="cartao">
@@ -223,7 +216,6 @@ $mensagem = $mensagens[$status] ?? '';
           <?php endforeach; ?>
         </tbody>
       </table>
-
     </section>
 
     <section class="cartao">
@@ -244,7 +236,6 @@ $mensagem = $mensagens[$status] ?? '';
         <button type="submit" class="botao-secundario">Reiniciar votação</button>
       </form>
     </section>
-
   </main>
 </body>
 </html>
